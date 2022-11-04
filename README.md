@@ -29,9 +29,15 @@
 
 ![](.README_images/8a96e589.png)
 
-## Lógica Lyers
+## Lógica Layers
+
 
 ![](.README_images/a642fce3.png)
+
+- Resource que é o controladore REST
+- O Controlador depende do Serviço 
+- E o serviço depende do Repository
+
 
 
 ## User entity and resource
@@ -94,6 +100,49 @@ application-test.properties:
         spring.h2.console.path=/h2-console
         spring.jpa.show-sql=true
         spring.jpa.properties.hibernate.format_sql=true 
+
+
+## JPA repository, dependency injection, database seeding
+
+* database seeding: inserir automaticamente alguns dados no BD. 
+
+Checklist:
+
+         UserRepository extends JPARepository<User, Long>
+         Configuration class for "test" profile
+         @Autowired UserRepository
+         Instantiate objects in memory
+         Persist objects
+
+Objects:
+
+    User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
+    User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
+
+
+
+Observação exemplo: O UserRepository vai ser o repository que será responsável por fazer
+operações com a Entidade User. Será uma interface que estend JpaRepository<User, Long>
+
+
+Classe de configuração não será nem controller, nem service, e nem repositorie ela será uma
+classe auxiliar que vai fazer algumas configurações na aplicação, será salvo no package config.
+Ela será anotada com @Configuration e @Profile("test) , dessa maneira ela sabe que você rodará
+essa classe apenas como perfil de test o qual definimos no arquivo application.properties.
+
+
+@Configuration
+@Profile("test)
+public class TestConfig {
+
+}
+
+Essa classe de configuração será usada a principio para fazer o database seeding ou seja popular o
+nosso BD com alguns objetos
+
+
+
+
 
 
 
