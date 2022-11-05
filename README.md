@@ -191,7 +191,22 @@ por sua vez vai depender de Repositorie.
 do Spring a classe do seu objeto ela tem que estar registrada no mecanismo de injeção de dependencia. Exemplo: @Service
 
 
+## Classe Order(Pedido), Instant(Para representar um instante), ISO 8601( padrão para representar datas na forma de texto)
 
+Basic new entity checklist:
+
+     Entity
+             o "To many" association, lazy loading, JsonIgnore
+     Repository
+     Seed
+     Service
+     Resource
+
+Objects:
+
+    Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1);
+    Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
+    Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
 
 
 ## Mecanismo de banco de dados H2

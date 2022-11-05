@@ -2,6 +2,8 @@ package com.educandoweb.course.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +18,9 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client")//mapeado pelo o atributo client na classe Order
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
     }
@@ -66,6 +71,11 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    //quando temos uma coleção só incluimos o get, por que não itremos trocar esse lista, faremos apenas inclusão e exclusão.
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
