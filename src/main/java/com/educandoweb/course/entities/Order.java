@@ -1,5 +1,8 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -14,7 +17,12 @@ public class Order implements Serializable { //order == pedido
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+    //para garantir que meu instant seja mostrado no JSon no formato de String do ISO 8601 acrescento uma anotation para formatar o json
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm",timezone = "GMT")//patern para definir o formato
     private Instant moment;//antes usavámos Date , mais depois do java 8 começou a se usar mair a classe Instant
+
 
     @ManyToOne
     @JoinColumn(name = "client_id")//nome da chave estrangeira que vai ter no BD

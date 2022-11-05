@@ -218,6 +218,48 @@ Em situações que precisamos ter mais controle sobre a resposta HTTP em um endp
 ResponseEntity que nos permite manipular os dados HTTP da resposta.
 
 
+No arquivo application.properties fizemoa a configuração ->  spring.jpa.open-in-view=true
+      
+    open-in-view=true  -> permite que o Jackson na hora serializar o json permite que ele traga do BD os pedidos
+    por isso que no Postman tivemos esse resultado:
+
+    
+    "id": 1,
+    "name": "Maria Brown",
+    "email": "maria@gmail.com",
+    "phone": "988888888",
+    "password": "123456",
+    "orders": [
+        {
+            "id": 1,
+            "moment": "2019-06-20T19:53:07Z"
+        },
+        {
+            "id": 3,
+            "moment": "2019-07-22T15:21:22Z"
+        }
+    ]
+
+    se eu trocar para false o mesmo não carrega dá um erro 500
+
+    {
+    "timestamp": "2022-11-05T14:26:15.771+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/users/2"
+
+    Essa configuração com false : spring.jpa.open-in-view=false
+    Essa configuração desabilitou  a posibilidade do jackson que está lá no fim do ciclo de vida chamar o JPA para trazer
+    os pedidos associados ao cliente.
+    false você não permite que um componente no fim do ciclo de vida  na hora de renderizar o json ele chame de novo o BD
+    para chmar o restante.
+
+    deixar como true a cofiguração -> spring.jpa.open-in-view=false
+    tem suas vantagens e desvantagens, você complica o seu ciclo de vida , pois o jackson que está no fim do ciclo de vida
+    vai ser chamado novamente para renderizar os dados no BD.
+    
+}
+
 
 
 
