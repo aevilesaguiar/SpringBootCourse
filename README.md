@@ -208,6 +208,18 @@ Objects:
     Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
     Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
 
+- "To many" association, lazy loading, JsonIgnore
+
+- lazy loading-> o JPA não carrega os objetos para muitos, para não estourar memória e o tráfego do computador
+
+
+Utilizando o ResponseEntity
+Em situações que precisamos ter mais controle sobre a resposta HTTP em um endpoint, o próprio Spring nos oferece a classe 
+ResponseEntity que nos permite manipular os dados HTTP da resposta.
+
+
+
+
 
 ## Mecanismo de banco de dados H2
 
@@ -258,7 +270,67 @@ O Spring Data JPA é uma implementação da abstração de repositório que é u
 a domínio baseado na estrutura de aplicativo Java Spring . Ele suporta de forma transparente todas as implementações de 
 JPA disponíveis e suporta operações CRUD , bem como a execução conveniente de consultas de banco de dados.
 
+
+## Jackson
+
+Jackson é uma excelente biblioteca para lidar com a transformação de texto em código. Ela suporta não só JSON, mas também 
+YAML, XML entre outros formatos.
+
+Jackson é uma biblioteca JAVA popular e muito eficiente usada para mapear ou serializar objetos JAVA para JSON e vice-versa.
+
+ObjectMapper é uma classe da biblioteca Jackson. Ela pode transformar classes POJO (Plain Old Java Objects) em JSON 
+(JavaScript Object Notation) e vice-versa.
+
+Por ser mais leve que seu antecessor, o XML, e nativo em linguagem populares como o JavaScript, JSON se tornou o formato 
+de dado mais utilizado na comunicação de aplicações hoje em dia, especialmente entre APIs RESTful e clientes web/mobile.
+
+Geralmente, será um framework quem utilizará a classe ObjectMapper. Por isso, na maioria das vezes precisaremos apenas 
+fazer um de-para do JSON para uma classe Java e vice-versa.
+
+Quanto a classe Java que será escrita, ela deve cumprir certos pré-requisitos, listados abaixo, para que a transformação 
+não falhe.
+
+    - Declarar um campo para cada propriedades do JSON;
+    - Usar a anotação @JsonIgnoreProperties ou @JsonIgnore para as propriedades que não desejamos utilizar;
+    - Declarar métodos assessores (getters) públicos;
+    - Garantir que pelo menos um construtor sem argumentos estará presente.
+
+## Como transformar JSON em objetos Java
+
+Esse é um cenário de leitura, também chamado de unmarshal/deserialização, onde recebemos um JSON e desejamos ler/transformar 
+ele em uma classe Java.
+
+Por exemplo, para o JSON do Código 3.
+
+    {
+    "nome":"Maria da Silva"
+    }
+
+...precisamos de uma classe como a que pode ser vista abaixo:
+
+    package br.com.devmedia;
+    
+    public class Pessoa {
+    private String nome;
+    
+        public String getNome() {
+          return nome;
+        }
+    
+        public void setNome(final String nome) {
+          this.nome = nome;
+        }
+    }
+
+
+Para futuras pesquisas, a conversão de algo em JSON é frequentemente chamada de marshall, ao contrário de unmarshal. 
+A comunidade Java costuma usar os termos Serialization (serialização) e Deserialization (deserialização) 
+para as mesmas operações sobre POJOs.
+
+
+
 ## Referencias
 
 - https://www.h2database.com/html/main.html
 - https://gasparbarancelli.com/post/banco-de-dados-h2-com-spring-boot
+- https://www.devmedia.com.br/introducao-ao-jackson-objectmapper/43174

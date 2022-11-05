@@ -34,7 +34,7 @@ public class UserResource {
         User obj = userService.findById(id);
         // retorno um ResponseEntity.ok() para indicar que teve sucesso
         //e no corpo da requisição que é o .body(obj) eu coloco o obj.
-        return ResponseEntity.ok().body(obj);
+                return ResponseEntity.ok().body(obj);
     }
 
 
