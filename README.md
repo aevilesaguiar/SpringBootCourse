@@ -142,7 +142,53 @@ nosso BD com alguns objetos
 
 
 
+## Service layer, component registration
 
+
+Order, Instant, ISO 8601
+Basic new entity checklist:
+
+     Entity
+          "To many" association, lazy loading, JsonIgnore
+     Repository
+     Seed
+     Service
+     Resource
+
+Objects:
+    
+    Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1);
+    Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
+    Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
+
+Camada de Serviço, a nossa arquitetura básica tem essa divisão de camadas lógicas:
+
+é o controlador que depende de serviços, que por sua vez dependente de repositories
+
+application<->Resource Layer(rest controllers)<->Service Layer<->data repositories
+
+
+Porque fazemos a camada de serviçoe não fazemos o controlador acessar diretamente o repositorie?
+Não é uma regra, mas uma preferencia, criar uma camada intermediária para implementar regras de 
+negócios/lógica/orquestração dentro de service. Essa camada Service é feita para separar as responsabilidades
+e impedir que o controller fique muito carregado de informação, ou seja que o controlador faça 
+exclusivamente o meio de campo entre as iterações do usuário na aplicação e as regras de negócio.
+A ideia é construir um controlador enxuto e as regras de negócio vem para a camada de serviço.
+
+Mas dessa forma existem algumas desvantagens por que existirão algumas operações  em que a camada de serviço vai 
+simplismente repassar para o repositorie a chamada de alguma coisa.
+
+Por exemplo:
+
+Eu vou fazer um endpoint no controller para recuperar um usuario por id, na camada de serviço não haverá nada especial
+eu simplismente vou repassar a chamada para o repositorie.
+
+Para manter a estrutura de Camadas (Layers) sempre faremos o controllador depender sempre de serviço e o serviço
+por sua vez vai depender de Repositorie.
+
+
+- component registration: é por que quando temos um objeto que vai poder ser injetado pelo o mecanismo de injeção de dependencia
+do Spring a classe do seu objeto ela tem que estar registrada no mecanismo de injeção de dependencia. Exemplo: @Service
 
 
 
