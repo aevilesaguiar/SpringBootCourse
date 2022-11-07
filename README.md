@@ -261,6 +261,37 @@ No arquivo application.properties fizemoa a configuração ->  spring.jpa.open-i
 }
 
 
+## Associação muitos para muitos com JoinTable
+
+Se olharmos para o nosso Domain Model enxergamos um relacionamento muito para muitos
+
+![](.README_images/e0961b18.png)
+
+
+Na instancia de Dominios temos muitas categorias para muitos produtos. EXEMPLO: o produto Smart Tv está associado com eletronicos e 
+Computers. Ou seja um produto pode ter mais de uma categoria, e uma categoria pode ter mais de um produto.
+
+
+![](.README_images/4f8ffd72.png)
+
+
+No banco de dados relacional não teremos essa associação de instancias e sim uma tabela de associação( quando transformamos um modelo de
+analise em um modelo relacional). Então teremos que mapear a nossa classe Produto e categoria para que essa tabela de associação
+apareça lá no banco de dados relacional e faremos isso com a JoinTable.
+
+
+    //mapeamento para transformar essas coleções que tem nas duas classes na tabela de associação que tem no modelo relacional
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",// tb_product_category-tabela de associação, com a anotação @JoinTable eu vou falar qual o nome da tabela, e quais vão ser as chaves estrangeiras que vai associar a tabela de produto com a Categoria
+            joinColumns =@JoinColumn(name = "product_id"), // joinColumns -> na tabela de product vai ter uma chave estrangeira chamada product_id(essa é a chave estrangeira de product
+             inverseJoinColumns = @JoinColumn(name = "category_id"))//defini a chave estrangeira da outra entidade nesse caso Category.
+    private Set<Category> categories = new HashSet<>();
+
+    @JsonIgnore//inclui o jsonIgnorar para evitar o looping infinito.
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
+
+
 
 
 ## Mecanismo de banco de dados H2
