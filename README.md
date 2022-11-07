@@ -353,7 +353,50 @@ Test:
     "phone": "977557755"
     }
 
+## Observações
 
+Quando faço um get em um id que não existe está dando o erro 500, e isso não é legal
+pois erro 500 é erro interno do servidor, e não é indicado o erro 500 para erros básicos
+como esse para você buscar um id que não existe.  Um id que não existe eu vou querer retornar por
+exemplo um erro 404, 404 no http é não encontrado.
+
+
+## Exception handling - findById
+
+Checklist:
+
+     NEW CLASS: services.exceptions.ResourceNotFoundException -> vamos criar uma exceção personalizada da nossa camada de serviços
+     NEW CLASS: resources.exceptions.StandardError -> quando fazemos uma requisição o String trás um objeto padrão igual a esse abaixo:
+       
+    {
+    "timestamp": "2022-11-07T18:49:35.802+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/users/7"
+    }
+
+    para fazer o tratamento manual da exceção e retornar um objeto similar ao objeto acima eu crio uma classe chamada standard error
+    com os campos acima. Ele é um objeto que já está na resposta da requisição e quem trabalha com isso é o resource
+     NEW CLASS: resources.exceptions.ResourceExceptionHandler -> é nessa classe que vamos dar o tratamento manual para os nossos erros.
+     UserService
+
+
+## Exception handling - delete
+
+Checklist:
+    
+     NEW CLASS: services.exceptions.DatabaseException
+     ResourceExceptionHandler
+     UserService
+    o EmptyResultDataAccessException
+    o DataIntegrityViolationException
+
+Exception handling - update
+
+Checklist:
+
+     UserService
+           o EntityNotFoundException
 
 ## Mecanismo de banco de dados H2
 
