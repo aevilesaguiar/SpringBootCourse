@@ -338,6 +338,23 @@ Checklist:
 noContent retorna uma resposta vazia -> codigo 204 No Content
 
 
+## User update
+
+Checklist:
+
+     UserService
+     UserResource
+
+Test:
+
+    {
+    "name": "Bob Brown",
+    "email": "bob@gmail.com",
+    "phone": "977557755"
+    }
+
+
+
 ## Mecanismo de banco de dados H2
 
 H2 é um banco de dados relacional escrito em Java. Ele pode ser integrado em aplicativos Java ou executado no 

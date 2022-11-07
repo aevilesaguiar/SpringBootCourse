@@ -36,5 +36,27 @@ public class UserService {
     }
 
 
+    public  User update(Long id, User obj){
+
+        User entity= userRepository.getReferenceById(id);//getReferenceById instancia o usuario, mais não vai no BD ainda, ele vai deixar apenas o objeto monitorado pelo o JPA
+                                                        //para eu trabalhar com ele , e em seguida eu posso efetuar alguma operação com o BD, melhor que usar o findById
+                                                        //o findById necessariamente vai no BD e tras o objeto o getReferenceById só prepara o objeto
+
+        //função criada
+        updateData(entity, obj);
+        return userRepository.save(entity);
+
+
+
+    }
+
+    //atualizar dados
+    private void updateData(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
+
+    }
+
 
 }
