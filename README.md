@@ -320,6 +320,22 @@ Test:
 
 Usaremos o código 201 - created - significa que você criou um novo recurso
 
+## User delete
+
+Checklist:
+
+     UserService
+     UserResource
+
+
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@PathVariable  Long id){
+
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+noContent retorna uma resposta vazia -> codigo 204 No Content
 
 
 ## Mecanismo de banco de dados H2
