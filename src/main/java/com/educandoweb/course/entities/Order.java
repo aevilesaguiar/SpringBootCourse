@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +32,8 @@ public class Order implements Serializable { //order == pedido
     private User client;
 
     private Integer orderStatus;
+
+
 
     public Order() {
     }
