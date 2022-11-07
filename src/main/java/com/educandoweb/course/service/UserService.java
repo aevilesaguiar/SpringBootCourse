@@ -26,6 +26,11 @@ public class UserService {
 
     }
 
+    //inserir no BD um novo objeto do tipo User
+    public User insert(User obj){
+       return userRepository.save(obj);
+    }
+
 
 
 }

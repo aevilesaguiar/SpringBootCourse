@@ -295,8 +295,30 @@ apareça lá no banco de dados relacional e faremos isso com a JoinTable.
 @embeddable?
 As classes incorporáveis são usadas para representar o estado de uma entidade, mas não têm uma identidade persistente própria;
 
+Uma API REST utiliza as anotações @ResponseBody e @RequestBody para indicar ao Spring que um recurso não será enviado ou 
+recebido por meio de uma página da Web. Se os dados do seu recurso fossem enviados a partir dos campos de uma página Web 
+(thymeleaf, por exemplo), você não poderia utilizar a anotação @RequestBody no parâmetro do seu método na classe Controller. 
+Mas como uma API REST não utiliza conceito de páginas Web, usa-se estas anotações para o envio ou recebimento dos recursos. 
+Para ficar mais claro, utilize o programa Postman. Através dele você poderá ver a diferença. Você envia e recebe os dados 
+(em formato JSON) sem a necessidade de uma página Web.
 
+## User insert
 
+Checklist:
+
+     UserService
+     UserResource
+
+Test:
+
+    {
+        "name": "Bob Brown",
+        "email": "bob@gmail.com",
+        "phone": "977557755",
+        "password": "123456"
+    }
+
+Usaremos o código 201 - created - significa que você criou um novo recurso
 
 
 
