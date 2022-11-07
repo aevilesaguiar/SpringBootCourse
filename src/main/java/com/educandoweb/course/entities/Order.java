@@ -13,7 +13,7 @@ import java.util.*;
 @Table(name = "tb_order")
 public class Order implements Serializable { //order == pedido
 
-    private static final long serialversionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +26,11 @@ public class Order implements Serializable { //order == pedido
     private Integer orderStatus;
 
 
-
-
     @ManyToOne
     @JoinColumn(name = "client_id")//nome da chave estrangeira que vai ter no BD
     private User client;
 
-    @OneToMany(mappedBy ="id.order" )//no ordemItem eu tenho o id, e o id por sua vez tem o pedido
+    @OneToMany(mappedBy = "id.order")//no ordemItem eu tenho o id, e o id por sua vez tem o pedido
     private Set<OrderItem> items = new HashSet<>();
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)//no caso de 1 para 1 estamos mapeando para o mesmo id, é obrigatorio colocar , cascade = CascadeType.ALL
@@ -40,19 +38,19 @@ public class Order implements Serializable { //order == pedido
 
 
 
+
     public Order() {
     }
 
-    public Order(Long id, Instant moment,OrderStatus orderStatus, User client) {
+
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+        super();
         this.id = id;
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
-
     }
-
     public Long getId() {
-
         return id;
     }
 
@@ -68,17 +66,14 @@ public class Order implements Serializable { //order == pedido
         this.moment = moment;
     }
 
-    public OrderStatus getOrderStatus(){
+    public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
     }
 
-    public void setOrderStatus(OrderStatus orderStatus){
-        if(orderStatus!= null){
-        this.orderStatus=orderStatus.getCode();
-    }}
-
-    public void setOrderStatus(Integer orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public User getClient() {
@@ -97,9 +92,16 @@ public class Order implements Serializable { //order == pedido
         this.payment = payment;
     }
 
-    //meu pedido conhece os items dele
-    public Set<OrderItem> getItems(){
+    public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 
     @Override

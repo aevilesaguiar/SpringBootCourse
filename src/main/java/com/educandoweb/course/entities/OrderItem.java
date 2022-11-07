@@ -14,7 +14,7 @@ import java.util.Objects;
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 
-    private static final long serialversionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     //atributo identificador que é o correspondente a chave primaria
     @EmbeddedId
@@ -33,24 +33,22 @@ public class OrderItem implements Serializable {
     }
 
     //set e get do Order/Product
-    @JsonIgnore
-    public Order getOrder(){
 
+    @JsonIgnore
+    public Order getOrder() {
         return id.getOrder();
     }
 
-    public void setOrder(Order order){
-        //vai no meu id do OrderItemPk e vai jogar  o pedido lá dentro
+    public void setOrder(Order order) {
         id.setOrder(order);
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         return id.getProduct();
     }
 
-    public void  setProduct(Product product){
-        //vai no meu id do OrderItemPk e vai jogar  o product lá dentro
-         id.setProduct(product);
+    public void setProduct(Product product) {
+        id.setProduct(product);
     }
 
     public Integer getQuantity() {
@@ -69,6 +67,9 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public Double getSubTotal() {
+        return price * quantity;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
