@@ -26,6 +26,8 @@ public class Order implements Serializable { //order == pedido
     private Integer orderStatus;
 
 
+
+
     @ManyToOne
     @JoinColumn(name = "client_id")//nome da chave estrangeira que vai ter no BD
     private User client;
@@ -33,7 +35,8 @@ public class Order implements Serializable { //order == pedido
     @OneToMany(mappedBy ="id.order" )//no ordemItem eu tenho o id, e o id por sua vez tem o pedido
     private Set<OrderItem> items = new HashSet<>();
 
-
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)//no caso de 1 para 1 estamos mapeando para o mesmo id, é obrigatorio colocar , cascade = CascadeType.ALL
+    private Payment payment;
 
 
 
@@ -73,6 +76,26 @@ public class Order implements Serializable { //order == pedido
         if(orderStatus!= null){
         this.orderStatus=orderStatus.getCode();
     }}
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
     //meu pedido conhece os items dele
     public Set<OrderItem> getItems(){

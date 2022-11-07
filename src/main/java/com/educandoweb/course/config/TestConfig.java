@@ -86,6 +86,13 @@ public class TestConfig implements CommandLineRunner {
 
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
+        Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1);
+
+        //para salvar um objeto dependente numa relação 1:1 vc não chama o repository do próprio objeto não
+        o1.setPayment(pay1);
+
+        orderRepository.save(o1);
+
 
 
     }
