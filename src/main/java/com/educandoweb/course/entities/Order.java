@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_order")
@@ -25,13 +23,17 @@ public class Order implements Serializable { //order == pedido
     //para garantir que meu instant seja mostrado no JSon no formato de String do ISO 8601 acrescento uma anotation para formatar o json
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm",timezone = "GMT")//patern para definir o formato
     private Instant moment;//antes usavámos Date , mais depois do java 8 começou a se usar mair a classe Instant
+    private Integer orderStatus;
 
 
     @ManyToOne
     @JoinColumn(name = "client_id")//nome da chave estrangeira que vai ter no BD
     private User client;
 
-    private Integer orderStatus;
+    @OneToMany(mappedBy ="id.order" )//no ordemItem eu tenho o id, e o id por sua vez tem o pedido
+    private Set<OrderItem> items = new HashSet<>();
+
+
 
 
 
@@ -71,6 +73,11 @@ public class Order implements Serializable { //order == pedido
         if(orderStatus!= null){
         this.orderStatus=orderStatus.getCode();
     }}
+
+    //meu pedido conhece os items dele
+    public Set<OrderItem> getItems(){
+        return items;
+    }
 
     @Override
     public boolean equals(Object o) {

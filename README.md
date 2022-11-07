@@ -292,6 +292,12 @@ apareça lá no banco de dados relacional e faremos isso com a JoinTable.
     private Set<Product> products = new HashSet<>();
 
 
+@embeddable?
+As classes incorporáveis são usadas para representar o estado de uma entidade, mas não têm uma identidade persistente própria;
+
+
+
+
 
 
 ## Mecanismo de banco de dados H2
